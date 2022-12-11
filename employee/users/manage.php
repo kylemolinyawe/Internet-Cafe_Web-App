@@ -1,3 +1,5 @@
+<?php include "../../connection.php"; ?>
+
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
