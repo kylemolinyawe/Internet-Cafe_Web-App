@@ -1,3 +1,39 @@
+<?php session_start();
+if(!isset($_SESSION['eid']))
+{
+    header("location: https://localhost/Internet-Cafe_Web-App/user/login.php");
+    die();
+}
+if($_SERVER['REQUEST_METHOD']=='POST')
+{
+$conn = new mysqli("localhost:3310","root","password","cafe");
+if($conn->connect_error)
+{
+    die("Connect Error (".$conn->errno.") :".$conn->connect_error);
+}
+    $brand=$_POST["brand"];
+    $monitor=$_POST["monitor"];
+    $keyboard=$_POST["keyboard"];
+    $mouse=$_POST["mouse"];
+    $surgep=$_POST["surgep"];
+    $surgeb=$_POST['surgeb'];
+    $os=$_POST['os'];
+    $router=$_POST['router'];
+    //current db does not use router so as to check if insertion is valid
+    $sql="INSERT INTO cafe_computer (C_BRAND,C_MONITOR,C_KEYBOARD,C_MOUSE,C_SURGE_PROTECTOR,C_SURGE_BATTERY_TYPE,C_SYSTEM) VALUES ('$brand','$monitor','$keyboard','$mouse','$surgep','$surgeb','$os')";
+    if($conn->query($sql))
+    {
+        header("location: https://localhost/Internet-Cafe_Web-App/employee/dashboard.php");
+        die();
+    }
+    else
+    {
+        echo "An error has occurred please try again later";
+    }
+}
+else
+{
+    ?>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
@@ -30,46 +66,46 @@
                             <!-- form inputs -->
                             <!-- TODO: Better layout the inputs -->
                             <!-- TODO: Have form data be sent to database -->
-                            <form class="border rounded-2">
-                                <div class="m-0 p-3 pb-1">
+                            <form class="border rounded-2" action='https://localhost/Internet-Cafe_Web-App/employee/computers/add.php' method='post'>
+                                <!--<div class="m-0 p-3 pb-1">
                                     <label class="mb-2" for="user-mobile-number">Status</label>
                                     <input type="text" class="form-control" id="computer-status">
-                                </div>
+                                </div> -->
                                 <div class="m-0 p-3 pb-1">
                                     <label class="mb-2" for="user-name">Brand</label>
-                                    <input type="text" class="form-control" id="computer-brand">
+                                    <input type="text" name='brand'class="form-control" id="computer-brand">
                                 </div>
                                 <div class="m-0 p-3 pb-1">
                                     <label class="mb-2" for="user-mobile-number">Monitor</label>
-                                    <input type="text" class="form-control" id="computer-monitor">
+                                    <input type="text" name='monitor'class="form-control" id="computer-monitor">
                                 </div>
                                 <div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">Keyboard</label>
-                                    <input type="text" class="form-control" id="computer-keyboard">
+                                    <input type="text" name='keyboard'class="form-control" id="computer-keyboard">
                                 </div>
                                 <div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">Mouse</label>
-                                    <input type="text" class="form-control" id="computer-mouse">
+                                    <input type="text" name='mouse'class="form-control" id="computer-mouse">
                                 </div>
                                 <div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">Surge Protector</label>
-                                    <input type="text" class="form-control" id="computer-surge-protector">
+                                    <input type="text" name='surgep'class="form-control" id="computer-surge-protector">
                                 </div>
                                 <div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">Surge Battery Type</label>
-                                    <input type="text" class="form-control" id="computer-surge-battery-type">
+                                    <input type="text" name='surgeb' class="form-control" id="computer-surge-battery-type">
                                 </div>
                                 <div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">System</label>
-                                    <input type="text" class="form-control" id="computer-system">
+                                    <input type="text" name='os' class="form-control" id="computer-system">
                                 </div>
-                                <div class="m-0 p-3">
+                                <!--<div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">Desk Location</label>
-                                    <input type="text" class="form-control" id="computer-desk-location">
-                                </div>
+                                    <input type="text"  class="form-control" id="computer-desk-location">
+                                </div> -->
                                 <div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">Router ID</label>
-                                    <input type="text" class="form-control" id="computer-router-id">
+                                    <input type="text" name='router' class="form-control" id="computer-router-id">
                                 </div>
                                 
                             <!-- TODO: append user id to hyperlink to be used by the user-update-record.html page -->
@@ -83,3 +119,4 @@
         </div>
     </body>
 </html>
+<?php } ?>

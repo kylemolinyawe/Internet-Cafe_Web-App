@@ -1,4 +1,11 @@
-<!<!-- show table of cafe computer use -->
+<?php session_start();
+if(!isset($_SESSION['eid']))
+{
+    header("location: https://localhost/Internet-Cafe_Web-App/user/login.php");
+    die();
+}
+    ?>
+<!-- show table of cafe computer use -->
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>

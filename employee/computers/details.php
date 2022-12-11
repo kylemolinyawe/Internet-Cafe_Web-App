@@ -1,3 +1,10 @@
+<?php session_start();
+if(!isset($_SESSION['eid']))
+{
+    header("location: https://localhost/Internet-Cafe_Web-App/user/login.php");
+    die();
+}
+    ?>
 <!DOCTYPE html>
 <!-- TODO: fix navbar not filling all available height -->
 !<!-- TODO: move modify to another php page -->
