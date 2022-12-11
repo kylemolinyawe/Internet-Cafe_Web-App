@@ -1,11 +1,29 @@
+<?php
+$user='root';
+$password='password';
+$database='cafe';
+$servername='localhost:3310';
+$mysqli=new mysqli($servername,$user,$password,$database);
+if($mysqli->connect_error)
+{
+    die('Connection Error ('.$mysqli->connect_errno.'): '.$mysqli->connect_error);
+    //TODO: display a back button to previous page.
+}
+else
+{
+?>
+<?php
+$sql="SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA='cafe' AND TABLE_NAME!='job'";
+$result=$mysqli->query($sql);
+?>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
-        <title>Computers History</title>
+        <title>Bill History</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <?php $currentPage = 'database'; ?>
+        <?php $currentPage = 'bill'; ?>
     </head>
     
     <body style="margin: 0; height: 100%; max-height: 100%">
@@ -22,9 +40,19 @@
                     <?php include 'top-nav.php';?>
                                                      
                     <!-- content section -->
-                    <h3 class="p-0 m-3 mb-0">View Computers History</h3>
-                    <label class="p-0 m-3 mt-2">November 29, 2022</label>
-                    
+                    <h3 class="p-0 m-3 mb-0">View Bill History</h3>
+                    <label class="p-0 m-3 mt-2"><?php $dateNow=date("M d, Y"); echo $dateNow."<br>";?></label>
+                    <div class="row g-3 m-0 p-0 align-items-left">
+                        <?php while($row=$result->fetch_assoc())
+                                {
+                                    $name=$row["TABLE_NAME"];
+                                 ?>
+                        <div class="col-auto m-0 p-0 ms-0">
+                            <button onclick="location.href='<?php echo $name?>.php'"><?php echo ucwords($name) ?></button>
+                        </div>
+                        <?php }
+                                $mysqli->close(); ?>
+                    </div>
                     <!-- search bar -->
                     <form class="">
                         <div class="row g-3 align-items-center">
@@ -75,3 +103,6 @@
         </div>
     </body>
 </html>
+<?php
+}
+?>

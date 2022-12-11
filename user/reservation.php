@@ -1,3 +1,17 @@
+<?php
+$user='root';
+$password='password';
+$database='cafe';
+$servername='localhost:3310';
+$mysqli=new mysqli($servername,$user,$password,$database);
+if($mysqli->connect_error)
+{
+    die('Connection Error ('.$mysqli->connect_errno.'): '.$mysqli->connect_error);
+    //TODO: display a back button to previous page.
+}
+else
+{
+?>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
@@ -34,12 +48,12 @@
                     
                     
                     <!-- form input -->
-                    <form class="border rounded-2 mt-3">
+                    <form class="border rounded-2 mt-3" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="m-0 p-3 pb-1 mt-3">
                             <div class="row">
                                 <label for="user-fee" class="col-sm-1 col-auto col-form-label required"">Seat No.</label>
                                 <div class="col">
-                                    <input type="text" id="user-fee" class="form-control" placeholder="Enter an available seat">
+                                    <input type="text" name="seat" id="user-fee" class="form-control" placeholder="Enter an available seat">
                                 </div>
                             </div>
                         </div>
@@ -48,18 +62,18 @@
                                 
                                 <label for="user-fee" class="col-sm-1 col-auto col-form-label required">Date</label>
                                 <div class="col">
-                                    <input type="date" id="user-date" class="form-control">
+                                    <input type="date" name="date" id="user-date" class="form-control">
                                 </div>
                                 
                                 <!-- TODO: add dropdown -->
                                 <label for="user-time" class="col-sm-1 col-auto col-form-label" required>Time In</label>
                                 <div class="col">
-                                    <input type="time" id="user-time" class="form-control" min="07:00" max="20:00" value="07:00">
+                                    <input type="time" name="time-in" id="user-time" class="form-control" min="07:00" max="20:00" value="07:00">
                                 </div>
                                 
                                 <label for="user-duration" class="col-sm-1 col-auto col-form-label">Time Out</label>
                                 <div class="col">
-                                        <input type="time" id="user-time" class="form-control" min="07:00" max="20:00" value="09:00">
+                                        <input type="time" name="time-out" id="user-time" class="form-control" min="07:00" max="20:00" value="09:00">
                                 </div>
                                 
 
@@ -75,3 +89,19 @@
         </div>
     </body>
 </html>
+<?php
+}
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+    $inpSeat = $_REQUEST["seat"];
+    $inpDate = $_REQUEST["date"];
+    $inpTimeIn=$_REQUEST["time-in"];
+    $inpTimeOut=$_REQUEST["time-out"];
+    
+    $msql = "INSERT INTO reservation VALUES ('$inpSeat','$inpDate','$inpTimeIn','$inpTimeOut')";
+    if(mysql_query($mysqli,$msql))
+    {
+        echo "<script type='text/javascript'> window.alert('Reservation Success'); </script>";
+    }
+}
+?>

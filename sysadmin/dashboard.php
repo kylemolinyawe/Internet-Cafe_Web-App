@@ -1,3 +1,19 @@
+<?php
+$user='root';
+$password='password';
+$database='cafe';
+$servername='localhost:3310';
+$mysqli=new mysqli($servername,$user,$password,$database);
+if($mysqli->connect_error)
+{
+    die('Connection Error ('.$mysqli->connect_errno.'): '.$mysqli->connect_error);
+    //TODO: display a back button to previous page.
+}
+else
+{
+?>
+
+
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
@@ -59,3 +75,9 @@
         </div>
     </body>
 </html>
+<?php
+
+
+}
+
+?>

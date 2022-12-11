@@ -10,7 +10,7 @@
 
         <!-- database -->
         <li class="nav-item">
-            <a href="/Internet-Cafe_Web-App/sysadmin/database.php" class="nav-item nav-link rounded-0 text-light p-3 m-0 <?php if($currentPage == 'database'){echo 'active';}?>">Database</a>
+            <a href="/Internet-Cafe_Web-App/sysadmin/computer%20log.php" class="nav-item nav-link rounded-0 text-light p-3 m-0 <?php if($currentPage == 'computer log'){echo 'active';}?>">Database</a>
         </li>
                
     </ul>
