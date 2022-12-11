@@ -1,5 +1,5 @@
 <!-- side nav bar -->
-<div class="col m-0 p-0 h-100">
+<div class="col m-0 p-0" style='min-height: 100%;'>
     <ul class="nav nav-pills flex-column bg-dark h-100" style="height: auto">
         <li>
             <h2 class="text-light p-3 m-0">Admin</h2>

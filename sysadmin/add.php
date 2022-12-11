@@ -41,8 +41,8 @@
                     
                     <!-- content section -->
                     <div class="container-fluid p-3">
-                        <h3>Add Record</h3>
-                        <label class="mb-3"><?php echo date("d F Y") ?></label>
+                        <h3 class="p-0 m-0">Add Record</h3>
+                        <label class="p-0 m-0 mt-1 mb-3"><?php echo date("d F Y") ?></label>
                         
                         <?php
                         if (!empty($_POST)){
@@ -51,7 +51,7 @@
                         ?>
                         
                         <!-- button navigation -->
-                        <p class="mb-1">Select a table to add to:</p>                        
+                        <p class="mb-2">Select a table to add to:</p>                        
                         <div class="container-fluid border rounded-3 mb-3 p-0">
                             <ul class="nav nav-pills">
                                 <?php // code for generating categories based on the tables of the database
@@ -66,7 +66,7 @@
                                         } else{
                                             $active = 'link-dark';
                                         }
-                                                                           
+                                    
                                         echo "<li class=nav-item>";
                                             echo "<a href='add.php?category=$row[0]' class='nav-link $active'>" . ($row[0]) . "</a>";
                                         echo "</li>";
@@ -76,7 +76,7 @@
                         </div>
                         
                             <!-- form inputs -->
-                            <p class="mb-1">Fields:</p>   
+                            <p class="mb-2">Fields:</p>   
                             <form class="border rounded-2" method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>">                                                              
                                 <?php // generate form fields based on the attributes of a table
                                 $query = $conn -> query("show columns from $table_name");

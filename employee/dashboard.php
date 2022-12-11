@@ -43,7 +43,9 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <!--TODO: add gear icon to the right -->
+                                            <?php>
+                                            
+                                            ?>
                                             <td><h3>6</h3></td> <!-- TODO: get total number of computers in database -->
                                         </tr>
                                         <tr>

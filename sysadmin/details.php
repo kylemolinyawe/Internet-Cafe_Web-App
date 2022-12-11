@@ -6,10 +6,20 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <?php $currentPage = 'details'; ?>
+        <?php
+        $currentPage = 'details';
+        
+        $conn = new mysqli("localhost:3310", "root", "dragonorange22", "internet_cafe");
+
+        if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+        }
+
+        $table_schema = "internet_cafe";
+        ?>  
     </head>
     
-    <body style="margin: 0; height: 100%; max-height: 100%">
+    <body style="min-height: 100%">
         <div class="container-fluid h-100">
             <div class="row h-100">
                 
@@ -24,123 +34,173 @@
                     
                     <!-- content section -->
                     <div class="container-fluid p-3">
-                        <h3 class="p-0 mb-0">View Computer</h3>
-                        <label class="p-0 m-0 mb-3 mt-2">November 29, 2022</label>
+                        <h3 class="p-0 mb-0">View Record</h3>
+                        <label class="p-0 m-0 mb-3 pt-1"><?php echo date("d F Y") ?></label>
                         
              
-                            <!-- view computer section -->
+                            <!--view section -->
                             <div class="container-fluid p-3 mb-4 border rounded-3">
-                                <table class="table table-striped">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Field Name</th>
+                                                <th>Value</th>                                   
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
 
-                                    <!-- first row in the table -->
-                                    <!-- use syntax for adding new rows -->
-                                    <!-- TODO: table contents reflects number of users in database users table -->
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">ID</th>
-                                            <td>000002</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Brand</th>
-                                            <td>Maingear R2 Razer Edition</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Monitor</th>
-                                            <td>Razer Raptor 27 1440p 165Hz</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Keyboard</th>
-                                            <td>Razer Deathstalker V2</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Mouse</th>
-                                            <td>Viper Mini</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Headphones</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Surge Protector</th>
-                                            <td>01:33:14 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Surge Battery Type</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">System</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Desk Location</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Router Id</th>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>                                       
-                                </table>
+
+                                            $table = $_GET['table'];
+                                            $field = $_GET['field'];
+                                            $id = $_GET['id'];     
+
+                                            $sql = "SHOW COLUMNS from $table";
+                                            $query = $conn->query($sql);
+
+                                            $field_names = [];
+
+                                            // get field names
+                                            while($row = $query->fetch_array()){
+                                                array_push($field_names, $row[0]);
+                                            }
+
+
+                                            $sql = "SELECT * FROM $table WHERE $field = $id";                                           
+                                            $query = $conn -> query($sql);
+
+                                            $i = 0;
+
+                                            // generate table row elements using field names and their corresponding values
+                                            while($row = mysqli_fetch_array($query, MYSQLI_NUM)){
+                                                foreach($row as $column){
+                                                    echo "<tr>";
+                                                    echo "<th class='col-3'>" . $field_names[$i++] . "</th>";
+                                                    echo "<td>" . $column . "</td>";                                                   
+                                                    echo "</tr>";
+                                                }                                          
+                                            }
+                                            
+
+                                            ?>    
+                                            
+                                            <tr>
+                                            
+                                        </tbody>                                       
+                                    </table>
                             </div>
 
                             <!-- modify section -->
                             <h3 class="p-0 m-0 mb-3">Modify</h3>
-                            <div class="container-fluid p-2 mb-5 border rounded-3">
+                            <div class="container-fluid p-3 mb-4 border rounded-3">
+                                <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Field Name</th>
+                                            <th>Modified Value</th>      
+                                            <th>Original Value</th>     
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- form inputs -->
+                                            
+                                            <?php 
+                                            
+                                            $sql = "SELECT * FROM $table WHERE $field = $id";                                           
+                                            $query = $conn -> query($sql);
+                                            
+                                            $i = 0;
+                                            $once = true;
+                                            
+                                            // each created text input has a name corresponding to their field name
+                                            while($row = mysqli_fetch_array($query, MYSQLI_NUM)){
+                                                foreach($row as $column){
+                                                    if(str_contains($field_names[$i], "date_added")){
+                                                        $i++;
+                                                        continue;
+                                                    }
+                                                    
+                                                    if($i == 0){
+                                                        $i++;
+                                                        continue;
+                                                    } if(str_contains($field_names[$i], "date_added")){
+                                                        $i++;
+                                                        continue;
+                                                    }
+                                                    
+                                                    
+                                                    echo "<tr>";
+                                                    echo "<th class='col-3'>" . $field_names[$i] . "</th>";
+                                                    echo "<td class='col-4'><input type=text name=$field_names[$i]></td>";
+                                                    echo "<td>" . $column . "</td>";
+                                                    echo "</tr>";
+                                                    
+                                                    $i++;
+                                                }                                          
+                                            }
 
-                                <!-- form inputs -->
-                                <!-- TODO: Better layout the inputs -->
-                                <!-- TODO: Have form data be sent to database -->
-                                <form>
-                                    <div class="m-0 p-3 pb-1">
-                                        <label class="mb-2" for="user-mobile-number">Status</label>
-                                        <input type="text" class="form-control" id="computer-status">
+                                            ?>
+                                                                                                          
+                                    </tbody>
+                                    </form>
+                                </table>
+                                    <div class="container-fluid p-0">
+                                        <button type="submit" class="btn btn-primary m-0 mt-3">Modify</button>
+                                        <?php
+                                        echo "<a href='delete.php?table=$table&field=$field&id=$id' class='btn btn-danger m-0 mt-3 text-lg-end'>";
+                                        ?>
+                                            Delete
+                                        </a>
                                     </div>
-                                    <div class="m-0 p-3 pb-1">
-                                        <label class="mb-2" for="user-name">Brand</label>
-                                        <input type="text" class="form-control" id="computer-brand">
-                                    </div>
-                                    <div class="m-0 p-3 pb-1">
-                                        <label class="mb-2" for="user-mobile-number">Monitor</label>
-                                        <input type="text" class="form-control" id="computer-brand">
-                                    </div>
-                                    <div class="m-0 p-3">
-                                        <label class="mb-2" for="user-email">Keyboard</label>
-                                        <input type="text" class="form-control" id="computer-keyboard">
-                                    </div>
-                                    <div class="m-0 p-3">
-                                        <label class="mb-2" for="user-email">Mouse</label>
-                                        <input type="text" class="form-control" id="computer-mouse">
-                                    </div>
-                                    <div class="m-0 p-3">
-                                        <label class="mb-2" for="user-email">Surge Protector</label>
-                                        <input type="text" class="form-control" id="computer-surge-protector">
-                                    </div>
-                                    <div class="m-0 p-3">
-                                        <label class="mb-2" for="user-email">Surge Battery Type</label>
-                                        <input type="text" class="form-control" id="computer-surge-battery-type">
-                                    </div>
-                                    <div class="m-0 p-3">
-                                        <label class="mb-2" for="user-email">System</label>
-                                        <input type="text" class="form-control" id="computer-system">
-                                    </div>
-                                    <div class="m-0 p-3">
-                                        <label class="mb-2" for="user-email">Desk Location</label>
-                                        <input type="text" class="form-control" id="computer-desk-location">
-                                    </div>
-                                    <div class="m-0 p-3">
-                                        <label class="mb-2" for="user-email">Router ID</label>
-                                        <input type="text" class="form-control" id="computer-router-id">
-                                    </div>
-
-                                    <!-- TODO: append user id to hyperlink to be used by the user-update-record.html page -->
-                                    <button type="submit" class="btn btn-primary m-3 align-content-lg-end">Modify</button>                               
-                                </form>                                
+                                </form>
                             </div>
+                            
+                            <?php
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {   
+                                    
+                                    $once = true;
+                                    
+                                    foreach($field_names as $field_name){
+                                        if(str_contains($field_name, "date_added")){
+                                            $i++;
+                                            continue;
+                                        }
+
+                                        if($once){
+                                            $once = false;
+                                            continue;
+                                        } 
+                                        $value = $_POST[$field_name];
+                                        
+                                        // check if each field name in _POST has a value
+                                        if(!empty($_POST[$field_name])){
+                                            echo $field_name . " is set to " . $value;
+                                            
+                                            $sql = "UPDATE $table SET $field_name = '$_POST[$field_name]' WHERE $field = $id";
+                                            echo "<meta http-equiv='refresh' content='0'>";
+                                            
+                                            if($conn -> query ($sql)){
+                                                echo "success!";
+                                            } else{
+                                                echo "failed!";
+                                            }
+                                            
+                                            
+                                            echo "<br>";
+                                        } else{
+                                            echo $field_name .  " has no value.";
+                                            echo "<br>";
+                                        }
+                                    }
+                                   
+                                }
+                            ?>
                       
                     </div>   
                 </div>
             </div>
         </div>
+        
     </body>
 </html>

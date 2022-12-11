@@ -25,44 +25,42 @@
                     <h1 class="mt-5 mb-3">Reserve a seat</h1>
                     
                     
-                    <!-- Seating arrangement -->
-                    <div class="bg-secondary w-75 mx-auto ps-auto pe-auto">
-                        <div class="bg-primary m-auto text-center mb-2" style="width: 40px; height: 40px "><h5 class="text-light">01</h5></div>
-                        <div class="bg-primary m-auto text-center mb-2" style="width: 40px; height: 40px "><h5 class="text-light">01</h5></div>
-                    </div>
 
                     
                     
                     <!-- form input -->
-                    <form class="border rounded-2 mt-3">
+                    <form class="border rounded-2 mt-3" method="post">
                         <div class="m-0 p-3 pb-1 mt-3">
+                            <div class="row">
+                                <label for="user-fee" class="col-sm-1 col-auto col-form-label required"">Name</label>
+                                <div class="col mb-3">
+                                    <input type="text" id="user-fee" class="form-control" placeholder="">
+                                </div>
+                            </div>
                             <div class="row">
                                 <label for="user-fee" class="col-sm-1 col-auto col-form-label required"">Seat No.</label>
                                 <div class="col">
-                                    <input type="text" id="user-fee" class="form-control" placeholder="Enter an available seat">
+                                    <input type="text" name="" class="form-control" placeholder="Enter an available seat">
                                 </div>
                             </div>
                         </div>
                         <div class="m-0 p-3 pb-1 mb-4">
                             <div class="row">
                                 
-                                <label for="user-fee" class="col-sm-1 col-auto col-form-label required">Date</label>
+                                <label class="col-sm-1 col-auto col-form-label required">Date</label>
                                 <div class="col">
-                                    <input type="date" id="user-date" class="form-control">
+                                    <input type="date" name="ts_date" class="form-control">
                                 </div>
                                 
-                                <!-- TODO: add dropdown -->
-                                <label for="user-time" class="col-sm-1 col-auto col-form-label" required>Time In</label>
+                                <label class="col-sm-1 col-auto col-form-label" required>Time In</label>
                                 <div class="col">
-                                    <input type="time" id="user-time" class="form-control" min="07:00" max="20:00" value="07:00">
+                                    <input type="time" name="ts_time_in" class="form-control" min="07:00" max="20:00" value="07:00">
                                 </div>
                                 
-                                <label for="user-duration" class="col-sm-1 col-auto col-form-label">Time Out</label>
+                                <label  class="col-sm-1 col-auto col-form-label">Time Out</label>
                                 <div class="col">
-                                        <input type="time" id="user-time" class="form-control" min="07:00" max="20:00" value="09:00">
+                                        <input type="time" name="ts_time_out" class="form-control" min="07:00" max="20:00" value="09:00">
                                 </div>
-                                
-
                             </div>
                             <input type="submit" class="btn btn-primary mt-4" value="Reserve Now">
                         </div>

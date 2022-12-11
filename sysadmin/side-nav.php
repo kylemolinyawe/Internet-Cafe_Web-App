@@ -18,12 +18,7 @@
         <li class="nav-item">
             <a href="/Internet-Cafe_Web-App/sysadmin/add.php" class="nav-item nav-link rounded-0 text-light p-3 m-0 ps-5
                     <?php if($currentPage == 'add'){echo 'active';}?>">Add Record</a>
-        </li>
-        <li class="nav-item">
-            <a href="/Internet-Cafe_Web-App/sysadmin/delete.php" class="nav-item nav-link rounded-0 text-light p-3 m-0 ps-5
-                    <?php if($currentPage == 'delete'){echo 'active';}?>">Delete Record</a>
-        </li>
-               
+        </li>             
     </ul>
 </div>
 

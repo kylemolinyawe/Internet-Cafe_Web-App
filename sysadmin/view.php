@@ -54,21 +54,9 @@
                     <!-- content section -->
                     <div class="container-fluid p-3">
                         <h3 class="p-0 mb-0">View Tables</h3>
-                        <label class="p-0 m-0 mb-3"><?php echo date("d F Y") ?></label>
+                        <label class="p-0 m-0 mb-3 pt-1"><?php echo date("d F Y") ?></label>
 
-                        <!-- search bar -->
-                        <form class="">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-4 m- me-0">
-                                    <input type="text" id="user-search" class="form-control" placeholder="Search for a record">
-                                </div>
 
-                                <!-- TODO: replace search button with an icon instead -->
-                                <div class="col-auto m-3 ms-0">
-                                    <button type="submit" class="btn btn-primary">Search</button>
-                                </div>
-                            </div>
-                        </form>
 
                         <!-- button navigation for each table in the database -->
                         <div class="container-fluid border rounded-3 mb-3 mt-2 p-0">
@@ -104,13 +92,18 @@
                                         <?php 
                                         $query = $conn->query("SHOW COLUMNS from $table_name");
                                         
+                                        $once = true;
+                                        $field;
 
                                         // gets all the column names of a table
                                         while($row = $query->fetch_array()){
                                             echo "<th scope=col>" . ($row['0']) . "</th>";
-                                        }
-
-                                        
+                                            if($once){
+                                                $field = $row['0'];
+                                                $once = false;
+                                            }
+                                                
+                                        }                                       
                                         ?>
                                     </tr>
                                 </thead>
@@ -123,12 +116,11 @@
 
                                         // nested loop to render each attribute value on the table
                                         while($row = mysqli_fetch_array($query, MYSQLI_NUM)){
-                                            echo "<tr class=clickable-row data-href=details.php?category=$table_name&id=$row[0]>";
+                                            echo "<tr class=clickable-row data-href=details.php?table=$table_name&field=$field&id=$row[0]>";
                                             foreach($row as $column){                                              
                                                 echo "<td style='word-wrap: break-word;'>" . $column . "</td>";
                                             }
                                             echo "</tr>";
-                                            echo "</a>";
                                         }                                           
                                         ?>
                                     
