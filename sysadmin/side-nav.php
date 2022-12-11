@@ -23,7 +23,11 @@
             <a href="/Internet-Cafe_Web-App/sysadmin/delete.php" class="nav-item nav-link rounded-0 text-light p-3 m-0 ps-5
                     <?php if($currentPage == 'delete'){echo 'active';}?>">Delete Record</a>
         </li>
-               
+        <?php if(isset($_SESSION['sysid'])){ ?>
+        <li class="nav-item">
+             <a class="nav-item nav-link rounded-0 text-light p-3 m-0 ps-5" href="/Internet-Cafe_Web-App/logout.php">Logout</a>
+        </li>
+        <?php } ?>
     </ul>
 </div>
 

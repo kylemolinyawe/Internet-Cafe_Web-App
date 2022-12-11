@@ -1,3 +1,10 @@
+<?php session_start();
+if(!isset($_SESSION['sysid']))
+{
+    header("location: https://localhost/Internet-Cafe_Web-App/user/login.php");
+    die();
+}
+    ?>
 <!DOCTYPE html>
 <html style="height: 100%;">
     <head>

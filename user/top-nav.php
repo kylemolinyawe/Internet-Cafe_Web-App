@@ -14,7 +14,11 @@
                     <a class="nav-link  <?php if($currentPage == 'reservation'){echo 'disabled';}?>" href="/Internet-Cafe_Web-App/user/reservation.php">Reservation</a>
                 </li>                      
                 <li class="nav-item">
+                    <?php if(isset($_SESSION['uid']) or isset($_SESSION['eid']) or isset($_SESSION['sysid'])){ ?>
+                    <a class="btn btn-primary" href="/Internet-Cafe_Web-App/logout.php">Logout</a>
+                    <?php } else {?>
                     <a class="btn btn-primary" href="/Internet-Cafe_Web-App/user/login.php">Login</a>
+                    <?php } ?>
                 </li>
                 
             </ul>

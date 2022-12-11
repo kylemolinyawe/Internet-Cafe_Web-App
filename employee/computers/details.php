@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- TODO: fix navbar not filling all available height -->
+!<!-- TODO: move modify to another php page -->
 <html style="min-height: 100%; height: 100%">
     <head>
         <title>View User</title>

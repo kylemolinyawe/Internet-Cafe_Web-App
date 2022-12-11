@@ -1,3 +1,18 @@
+<?php session_start();
+if(!isset($_SESSION['eid']))
+{
+    header("location: https://localhost/Internet-Cafe_Web-App/user/login.php");
+    die();
+}
+    ?>
+<?php
+$conn = new mysqli("localhost:3310","root","password","cafe");
+if($conn->connect_error)
+{
+    die("Connect Error (".$conn->errno.") :".$conn->connect_error);
+}
+
+?>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
@@ -31,18 +46,22 @@
                             
                             <!-- form inputs -->
                             <!-- TODO: fix alignment to match with h3 element -->
-                            <form class="border rounded-2">
+                            <form class="border rounded-2" action='finalstep.php' method='post'>
                                 <div class="m-0 p-3 pb-1">
                                     <label class="mb-2" for="user-name">User name</label>
-                                    <input type="text" class="form-control" id="user-name" placeholder="Enter username">
+                                    <input type="text" name='user-name' class="form-control" id="user-name" placeholder="Enter username">
+                                </div>
+                                <div class="m-0 p-3 pb-1">
+                                    <label class="mb-2" for="user-name">User name</label>
+                                    <input type="password" name='pass' class="form-control" id="user-name" placeholder="Enter password">
                                 </div>
                                 <div class="m-0 p-3 pb-1">
                                     <label class="mb-2" for="user-mobile-number">Mobile number</label>
-                                    <input type="text" class="form-control" id="user-mobile-number" placeholder="Enter mobile no.">
+                                    <input type="text" name='mobile-no' class="form-control" id="user-mobile-number" placeholder="Enter mobile no.">
                                 </div>
                                 <div class="m-0 p-3">
                                     <label class="mb-2" for="user-email">Email</label>
-                                    <input type="text" class="form-control" id="user-email" placeholder="Enter email">
+                                    <input type="text" name='email' class="form-control" id="user-email" placeholder="Enter email">
                                 </div>                            
                                 <button type="submit" class="btn btn-primary m-3 align-content-lg-end">Submit</button>                               
                             </form>       

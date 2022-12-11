@@ -1,5 +1,20 @@
-<?php include "../../connection.php"; ?>
-
+<?php session_start();
+if(!isset($_SESSION['eid']))
+{
+    header("location: https://localhost/Internet-Cafe_Web-App/user/login.php");
+    die();
+}
+    ?>
+<?php
+$conn = new mysqli("localhost:3310","root","password","cafe");
+if($conn->connect_error)
+{
+    die("Connect Error (".$conn->errno.") :".$conn->connect_error);
+}
+$sqlstatement="SELECT * FROM timeslot";
+$results = $conn->query($sqlstatement);
+$conn->close();
+?>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
@@ -45,15 +60,18 @@
                                 <!-- first row in the table -->
                                 <!-- use syntax for adding new rows -->
                                 <!-- TODO: table contents reflects number of users in database users table -->
+                               
                                 <tbody>
+                                     <?php while($row=$results->fetch_assoc()){ ?>
                                     <tr>
-                                        <th scope="row">1</th>                                    
-                                        <td>John Doe</td>
-                                        <td>01:33:14 PM</td>
-                                        <td>01</td>
-                                        <td>Not Yet Updated</td>
-                                        <td><a href="/Internet-Cafe_Web-App/employee/users/view.php" class="text-decoration-none">Update</a></td>
+                                        <th scope="row"><?php echo $row['USER_ID'];?></th>                                    
+                                        <td>John Doe<!-- should have an entry in timeslot for user_name --></td>
+                                        <td><?php echo $row['TS_TIME_IN'];?></td>
+                                        <td><?php echo $row['C_COMP_ID'];?></td>
+                                        <td>Not Yet Updated <!<!-- should be computed from bill(?) --></td>
+                                        <td><a href="/Internet-Cafe_Web-App/employee/users/details.php" class="text-decoration-none">Update</a></td>
                                     </tr>
+                                     <?php }?>
                                 </tbody>
                                          
                             </table>

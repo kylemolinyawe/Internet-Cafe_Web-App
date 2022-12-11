@@ -34,7 +34,12 @@
         </li>
         <li class="nav-item"> 
             <a href="/Internet-Cafe_Web-App/employee/computers/history.php" class="nav-item nav-link rounded-0 text-light p-3 m-0 ps-5 <?php if($currentPage == 'computers-history'){echo 'active';}?>" >View History</a>
-        </li>                     
+        </li>
+        <?php if(isset($_SESSION['eid'])){ ?>
+        <li class="nav-item">
+             <a class="nav-item nav-link rounded-0 text-light p-3 m-0 ps-5" href="/Internet-Cafe_Web-App/logout.php">Logout</a>
+        </li>
+        <?php } ?>
     </ul>
 </div>
 

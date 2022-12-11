@@ -1,3 +1,19 @@
+<?php session_start();
+if(!isset($_SESSION['eid']))
+{
+    header("location: https://localhost/Internet-Cafe_Web-App/user/login.php");
+    die();
+}
+    ?>
+<?php
+$conn = new mysqli("localhost:3310","root","password","cafe");
+if($conn->connect_error)
+{
+    die("Connect Error (".$conn->errno.") :".$conn->connect_error);
+}
+$newsql="SELECT * FROM timeslot";
+$results=$conn->query($newsql);
+?>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
@@ -60,14 +76,17 @@
                                 <!-- use the below syntax for adding new rows -->
                                 <!-- TODO: table contents reflects number of users in database users table -->
                                 <tbody>
+                                    <?php while($row=$results->fetch_assoc())
+                                    { ?>
                                     <tr>
-                                        <th scope="row">000142</th>                                    
-                                        <td>Jane Doe</td>
-                                        <td>10:32:01 AM</td>
-                                        <td>01</td>
-                                        <td>Check Out</td>
-                                        <td><a href="/Internet-Cafe_Web-App/employee/users/view.php" class="text-decoration-none">Update</a></td>
+                                        <th scope="row"><?php echo $row['TS_ID']; ?></th>                                    
+                                        <td><?php echo $row['USER_ID']; ?> <!-- since no name in timeslot table, used code for user id --></td>
+                                        <td><?php echo $row['TS_TIME_OUT']; ?></td>
+                                        <td><?php echo $row['C_COMP_ID'];?></td>
+                                        <td>Check Out<!<!-- status is mix of bill and timeslot probably? test with mysql workbench --></td>
+                                        <td><a href="/Internet-Cafe_Web-App/employee/users/details.php" class="text-decoration-none">Update</a></td>
                                     </tr>
+                              <?php } ?>
                                 </tbody>
                                          
                             </table>

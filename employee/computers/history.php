@@ -1,3 +1,4 @@
+<!<!-- show table of cafe computer use -->
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>

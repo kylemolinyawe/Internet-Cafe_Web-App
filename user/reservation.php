@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>
@@ -25,7 +28,7 @@
                     <h1 class="mt-5 mb-3">Reserve a seat</h1>
                     
                     
-                    <!-- Seating arrangement -->
+                    <!-- Seating arrangement NOTE: should reflect the contents of cafe comp -->
                     <div class="bg-secondary w-75 mx-auto ps-auto pe-auto">
                         <div class="bg-primary m-auto text-center mb-2" style="width: 40px; height: 40px "><h5 class="text-light">01</h5></div>
                         <div class="bg-primary m-auto text-center mb-2" style="width: 40px; height: 40px "><h5 class="text-light">01</h5></div>
@@ -34,12 +37,12 @@
                     
                     
                     <!-- form input -->
-                    <form class="border rounded-2 mt-3">
+                    <form class="border rounded-2 mt-3" action='reservationController.php' method='POST'>
                         <div class="m-0 p-3 pb-1 mt-3">
                             <div class="row">
                                 <label for="user-fee" class="col-sm-1 col-auto col-form-label required"">Seat No.</label>
                                 <div class="col">
-                                    <input type="text" id="user-fee" class="form-control" placeholder="Enter an available seat">
+                                    <input type="text" name="seat" id="user-fee" class="form-control" placeholder="Enter an available seat">
                                 </div>
                             </div>
                         </div>
@@ -48,18 +51,18 @@
                                 
                                 <label for="user-fee" class="col-sm-1 col-auto col-form-label required">Date</label>
                                 <div class="col">
-                                    <input type="date" id="user-date" class="form-control">
+                                    <input type="date" name="date" id="user-date" class="form-control">
                                 </div>
                                 
                                 <!-- TODO: add dropdown -->
                                 <label for="user-time" class="col-sm-1 col-auto col-form-label" required>Time In</label>
                                 <div class="col">
-                                    <input type="time" id="user-time" class="form-control" min="07:00" max="20:00" value="07:00">
+                                    <input type="time" name='timein' id="user-time" class="form-control" min="07:00" max="20:00" value="07:00">
                                 </div>
                                 
                                 <label for="user-duration" class="col-sm-1 col-auto col-form-label">Time Out</label>
                                 <div class="col">
-                                        <input type="time" id="user-time" class="form-control" min="07:00" max="20:00" value="09:00">
+                                        <input type="time" name='timeout' id="user-time" class="form-control" min="07:00" max="20:00" value="09:00">
                                 </div>
                                 
 
